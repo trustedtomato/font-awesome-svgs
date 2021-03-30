@@ -1,0 +1,35 @@
+{
+	"name": "font-awesome-svgs-svelte",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build",
+		"start": "svelte-kit start",
+		"lint": "eslint .",
+		"postinstall": "node ./scripts/postinstall.cjs"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-node": "next",
+		"@sveltejs/kit": "next",
+		"@typescript-eslint/eslint-plugin": "^4.19.0",
+		"@typescript-eslint/parser": "^4.19.0",
+		"eslint": "^7.22.0",
+		"eslint-plugin-svelte3": "^3.1.0",
+		"svelte": "^3.29.0",
+		"svelte-preprocess": "^4.0.0",
+		"tslib": "^2.0.0",
+		"typescript": "^4.0.0",
+		"vite": "^2.1.0"
+	},
+	"type": "module",
+	"engines": {
+		"node": ">= 12.17.0"
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^5.15.3",
+		"@sveltejs/adapter-static": "^1.0.0-next.4",
+		"@sveltejs/svelte-virtual-list": "^3.0.1",
+		"readdirp": "^3.6.0",
+		"svelte-tiny-virtual-list": "^1.1.5"
+	}
+}
