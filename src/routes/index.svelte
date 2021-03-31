@@ -6,6 +6,7 @@
 	import { chunkArray } from '$lib/chunkArray';
 	import { goto } from '$app/navigation'
 	import { browser } from '$app/env';
+	import Footer from '$lib/Footer.svelte'
 
 	// setup state
 	let search = browser
@@ -21,7 +22,6 @@
 		}
 	}
 	let loading = true
-	let searchIcon: Icon
 	
 	let scrollbarWidth = 0
 	let itemWidth = 80
@@ -61,7 +61,6 @@
 			gridContainer = gridContainer
 		})
 		loading = false
-		searchIcon = icons.find(icon => icon.name === 'solid/search')
 	})
 
 	const createIconClickListener = (icon: Icon) => () => {
@@ -73,58 +72,51 @@
 	<title>Font Awesome SVGs</title>
 </svelte:head>
 
-<main>
-	{#if loading}
-		<div style="margin: auto">
-			Loading icons...
-		</div>
-	{:else}
-		<label class="search">
-			<span>
-				{@html searchIcon.content}
-			</span>
-			<input bind:value={search} type="search">
-		</label>
-		<div class="list-container" bind:this={gridContainer}>
-			<VirtualList
-				width="100%"
-				height={itemGridHeight}
-				itemCount={chunkedIconSelection.length}
-				itemSize={itemHeight}
-			>
-				<div slot="item" let:index let:style {style} class="flex item-row">
-					{#each chunkedIconSelection[index] as icon}	
-						<div class="item" style="width: {itemWidth}px" on:click={createIconClickListener(icon)}>
-							{@html icon.content }
-							<div>
-								<div class="truncate">
-									{ icon.name }
-								</div>
+{#if loading}
+	<div style="margin: auto">
+		Loading icons...
+	</div>
+{:else}
+	<label class="search shadow">
+		<span>
+			{@html icons.find(icon => icon.name === 'solid/search').content}
+		</span>
+		<input bind:value={search} type="search">
+	</label>
+	<div class="list-container" bind:this={gridContainer}>
+		<VirtualList
+			width="100%"
+			height={itemGridHeight}
+			itemCount={chunkedIconSelection.length}
+			itemSize={itemHeight}
+		>
+			<div slot="item" let:index let:style {style} class="flex item-row">
+				{#each chunkedIconSelection[index] as icon}	
+					<div class="item" style="width: {itemWidth}px" on:click={createIconClickListener(icon)}>
+						{@html icon.content }
+						<div>
+							<div class="truncate">
+								{ icon.name }
 							</div>
 						</div>
-					{/each}
-				</div>
-			</VirtualList>
-		</div>
-	{/if}
-</main>
+					</div>
+				{/each}
+			</div>
+		</VirtualList>
+	</div>
+{/if}
+<Footer />
 
 <style>
-	main {
-		height: 100%;
-		max-height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
 	.search {
-		height: 32px;
+		height: 2em;
 		display: flex;
 		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	}
 	.search span {
-		margin: 8px;
-		height: 16px;
-		width: 16px;
+		margin: .5em;
+		height: 1em;
+		width: 1em;
 	}
 	input{
 		width: 100%;
@@ -132,10 +124,10 @@
 		outline: 0;
 		font-family: inherit;
 		font-size: inherit;
-		padding: 4px;
+		padding: .25em;
 	}
 	.list-container {
-		margin: 8px 0 8px 0;
+		margin: .5em 0;
 		min-height: 0;
 		flex-grow: 1;
 	}
@@ -144,11 +136,12 @@
 		display: flex;
 	}
 	.item {
-		padding: 8px;
+		padding: .5em;
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		text-align: center;
+		cursor: pointer;
 	}
 	.truncate {
 		white-space: nowrap;

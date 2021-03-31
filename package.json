@@ -1,5 +1,5 @@
 {
-	"name": "font-awesome-svgs-svelte",
+	"name": "font-awesome-svgs",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "svelte-kit dev",
