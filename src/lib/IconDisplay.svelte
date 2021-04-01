@@ -3,20 +3,20 @@
 
   export let icon: Icon
   let aHref: string
-  $: aHref = icon?.content
-    ? 'data:text/plain;charset=utf-8,' + encodeURIComponent(icon?.content)
-    : null
+  $: if(icon?.content) {
+    aHref = 'data:text/plain;charset=utf-8,' + encodeURIComponent(icon?.content)
+  }
 </script>
 
 <div style="display: flex">
-  <div class="icon-container" style="margin: 8px">
+  <div class="icon-container" style="margin: .5em">
     {@html icon?.content }
   </div>
   <div>
-    <a download={icon?.name} href={aHref} style="margin: 8px; display: inline-block">
+    <a download={icon?.name} href={aHref} style="margin: .5em; display: inline-block">
       Download!
     </a>
-    <div style="margin: 0 8px 8px 8px;">
+    <div style="margin: 0 .5em .5em .5em;">
       Code:
     </div>
     <code>{ icon?.content }</code>
@@ -28,13 +28,13 @@
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    width: 80px;
-    height: 80px;
+    width: 5em;
+    height: 5em;
   }
   code {
     display: block;
-    padding: 8px;
-    margin: 8px;
+    padding: .5em;
+    margin: .5em;
     background: black;
     color: white;
     word-wrap: break-word;

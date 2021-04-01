@@ -3,32 +3,41 @@
 	import VirtualList from 'svelte-tiny-virtual-list'
 	import type { Icon } from '$lib/Icon'
 	import { loadIcons } from '$lib/loadIcons'
-	import { chunkArray } from '$lib/chunkArray';
-	import { browser } from '$app/env';
+	import { chunkArray } from '$lib/chunkArray'
+	import { browser } from '$app/env'
 	import Footer from '$lib/Footer.svelte'
 	import { basePath } from '$lib/basePath'
 	import Head from '$lib/Head.svelte'
 
-	// setup state
+	// --- setup state ---
 	let search = browser
 		? new URLSearchParams(window.location.search).get('q') || ''
 		: ''
-	$: {
-		if (browser) {
-			history.replaceState(
-				history.state,
-				'',
-				search ? `?q=${search}` : '.'
-			)
-		}
+	$: if (browser) {
+		history.replaceState(
+			history.state,
+			'',
+			search ? `?q=${search}` : '.'
+		)
 	}
 	let loading = true
 	
+	// state of the grid
 	let scrollbarWidth = 0
 	let itemWidth = 80
 	let itemHeight = 80
 	let itemsPerRow = 5
-	let itemGridHeight = 500
+	let gridHeight = 500
+	let gridContainer
+
+	// Change the grid's dimensions when its container changes.
+	$: if (gridContainer) {
+		const gridWidth = Math.min(window.innerWidth - scrollbarWidth, 600)
+		gridHeight = gridContainer.clientHeight
+		itemHeight = Math.max(window.innerHeight / 12, 80)
+		itemsPerRow = Math.floor(gridWidth / 120)
+		itemWidth = gridWidth / itemsPerRow
+	}
 
 	let icons: Icon[] = []
 	let iconSelection: Icon[] = []
@@ -36,21 +45,8 @@
 	let chunkedIconSelection: Icon[][] = []
 	$: chunkedIconSelection = chunkArray(iconSelection, itemsPerRow)
 
-	let gridContainer
-	$: {
-		if (typeof window === 'object') {
-			const newGridWidth = Math.min(window.innerWidth - scrollbarWidth, 600)
-			const newGridHeight = gridContainer?.clientHeight
-			if (newGridHeight) {
-				itemGridHeight = newGridHeight
-				itemHeight = Math.max(window.innerHeight / 12, 80)
-				itemsPerRow = Math.floor(newGridWidth / 120)
-				itemWidth = newGridWidth / itemsPerRow
-			}
-		}
-	}
-
 	onMount(async () => {
+		// calculate scrollbar width
 		const x = document.createElement('div')
 		x.style.overflow = 'scroll'
 		document.body.appendChild(x)
@@ -58,6 +54,8 @@
 		document.body.removeChild(x)
 
 		icons = await loadIcons()
+		// When the window is resized, the gridContainer is resized too,
+		// so we have to trigger changing the grid dimensions.
 		window.addEventListener('resize', () => {
 			gridContainer = gridContainer
 		})
@@ -72,20 +70,20 @@
 		Loading icons...
 	</div>
 {:else}
-	<label class="search shadow">
+	<label class="search">
 		<span>
 			{@html icons.find(icon => icon.name === 'solid/search').content}
 		</span>
 		<input bind:value={search} type="search">
 	</label>
-	<div class="list-container" bind:this={gridContainer}>
+	<div class="grid-container" bind:this={gridContainer}>
 		<VirtualList
 			width="100%"
-			height={itemGridHeight}
+			height={gridHeight}
 			itemCount={chunkedIconSelection.length}
 			itemSize={itemHeight}
 		>
-			<div slot="item" let:index let:style {style} class="flex item-row">
+			<div slot="item" let:index let:style {style} class="item-row">
 				{#each chunkedIconSelection[index] as icon}	
 					<a class="item" style="width: {itemWidth}px" href="{basePath}icon/?which={icon.name}">
 						{@html icon.content }
@@ -121,7 +119,7 @@
 		font-size: inherit;
 		padding: .25em;
 	}
-	.list-container {
+	.grid-container {
 		margin: .5em 0;
 		min-height: 0;
 		flex-grow: 1;
