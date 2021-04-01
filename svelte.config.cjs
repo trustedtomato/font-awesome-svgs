@@ -1,6 +1,13 @@
 const sveltePreprocess = require('svelte-preprocess');
 const adapter = require('@sveltejs/adapter-static');
 const pkg = require('./package.json');
+const basePath = process.env.BASE
+
+if (basePath) {
+	console.log('Using base path: ' + basePath)
+} else {
+	console.log('Not using any base path.')
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 module.exports = {
@@ -15,7 +22,10 @@ module.exports = {
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
-
+		paths: basePath
+			? { base: basePath }
+			: {},
+	
 		vite: {
 			ssr: {
 				noExternal: Object.keys(pkg.dependencies || {})

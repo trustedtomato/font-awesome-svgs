@@ -17,7 +17,7 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies & build
-        run: npm install && npm run build
+        run: npm install && BASE='/font-awesome-svgs' npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
