@@ -10,14 +10,15 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
 
       - name: Install dependencies & build
         run: npm install && BASE='/font-awesome-svgs' npm run build
+      
+      - name: List files in ./build for debugging purposes
+        run: ls ./build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
