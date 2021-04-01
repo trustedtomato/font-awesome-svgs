@@ -1,6 +1,7 @@
 const pathLib = require('path')
 const { writeFileSync, readFileSync, copyFileSync } = require('fs')
 const readdirp = require('readdirp')
+const makeDir = require('make-dir')
 
 const rootDirPath = pathLib.join(__dirname, '../')
 
@@ -22,6 +23,8 @@ const iconCollectionPath = pathLib.join(
 let iconCollection = ''
 
 ;(async () => {
+  await makeDir(iconsDir)
+
   for await (const { path, fullPath } of
     readdirp(svgDirPath)
   ) {
