@@ -25,6 +25,8 @@ module.exports = {
 		paths: basePath
 			? { base: basePath }
 			: {},
+
+		router: false,
 	
 		vite: {
 			ssr: {
