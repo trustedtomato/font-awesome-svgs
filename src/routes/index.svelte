@@ -4,9 +4,10 @@
 	import type { Icon } from '$lib/Icon'
 	import { loadIcons } from '$lib/loadIcons'
 	import { chunkArray } from '$lib/chunkArray';
-	import { goto } from '$app/navigation'
 	import { browser } from '$app/env';
 	import Footer from '$lib/Footer.svelte'
+	import { basePath } from '$lib/basePath'
+	import Head from '$lib/Head.svelte'
 
 	// setup state
 	let search = browser
@@ -62,15 +63,9 @@
 		})
 		loading = false
 	})
-
-	const createIconClickListener = (icon: Icon) => () => {
-		goto(`icon?which=${icon.name}`)
-	}
 </script>
 
-<svelte:head>
-	<title>Font Awesome SVGs</title>
-</svelte:head>
+<Head />
 
 {#if loading}
 	<div style="margin: auto">
@@ -92,14 +87,14 @@
 		>
 			<div slot="item" let:index let:style {style} class="flex item-row">
 				{#each chunkedIconSelection[index] as icon}	
-					<div class="item" style="width: {itemWidth}px" on:click={createIconClickListener(icon)}>
+					<a class="item" style="width: {itemWidth}px" href="{basePath}icon/?which={icon.name}">
 						{@html icon.content }
 						<div>
 							<div class="truncate">
 								{ icon.name }
 							</div>
 						</div>
-					</div>
+					</a>
 				{/each}
 			</div>
 		</VirtualList>
@@ -141,7 +136,8 @@
 		display: flex;
 		flex-direction: column;
 		text-align: center;
-		cursor: pointer;
+		text-decoration: none;
+		color: inherit;
 	}
 	.truncate {
 		white-space: nowrap;

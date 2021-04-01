@@ -5,6 +5,7 @@
   import { browser } from '$app/env';
   import IconDisplay from '$lib/IconDisplay.svelte'
   import Footer from '$lib/Footer.svelte'
+  import Head from '$lib/Head.svelte';
 
   const query = browser
     ? new URLSearchParams(window.location.search).get('which')
@@ -18,9 +19,7 @@
   })
 </script>
 
-<svelte:head>
-	<title>{query} – Font Awesome SVGs</title>
-</svelte:head>
+<Head extraTitle={query} />
 
 <div style="flex-grow: 1; display: flex; flex-direction: column">
   {#if icon}
