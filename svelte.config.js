@@ -19,7 +19,7 @@ if (basePath) {
 export default {
 	preprocess: sveltePreprocess(),
 	kit: {
-		trailingSlash: 'always',
+		trailingSlash: 'ignore',
 		adapter: adapter(),
 		target: '#svelte',
 		paths: basePath
