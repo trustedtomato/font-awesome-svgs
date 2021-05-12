@@ -1,6 +1,12 @@
-const sveltePreprocess = require('svelte-preprocess');
-const adapter = require('@sveltejs/adapter-static');
-const pkg = require('./package.json');
+import sveltePreprocess from 'svelte-preprocess';
+import adapter from '@sveltejs/adapter-static';
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'))
 const basePath = process.env.BASE
 
 if (basePath) {
@@ -10,17 +16,15 @@ if (basePath) {
 }
 
 /** @type {import('@sveltejs/kit').Config} */
-module.exports = {
+export default {
 	preprocess: sveltePreprocess(),
 	kit: {
+		trailingSlash: 'always',
 		adapter: adapter(),
 		target: '#svelte',
 		paths: basePath
 			? { base: basePath }
 			: {},
-
-		// TODO This should be updated once https://github.com/sveltejs/kit/issues/733 is resolved.
-		router: false,
 	
 		vite: {
 			ssr: {

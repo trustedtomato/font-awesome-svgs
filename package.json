@@ -11,15 +11,15 @@
 	"devDependencies": {
 		"@sveltejs/adapter-node": "next",
 		"@sveltejs/kit": "next",
-		"@typescript-eslint/eslint-plugin": "^4.20.0",
-		"@typescript-eslint/parser": "^4.20.0",
-		"eslint": "^7.23.0",
-		"eslint-plugin-svelte3": "^3.1.2",
-		"svelte": "^3.37.0",
-		"svelte-preprocess": "^4.7.0",
-		"tslib": "^2.1.0",
-		"typescript": "^4.2.3",
-		"vite": "^2.1.5"
+		"@typescript-eslint/eslint-plugin": "^4.23.0",
+		"@typescript-eslint/parser": "^4.23.0",
+		"eslint": "^7.26.0",
+		"eslint-plugin-svelte3": "^3.2.0",
+		"svelte": "^3.38.2",
+		"svelte-preprocess": "^4.7.3",
+		"tslib": "^2.2.0",
+		"typescript": "^4.2.4",
+		"vite": "^2.3.1"
 	},
 	"type": "module",
 	"engines": {
@@ -27,10 +27,10 @@
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.15.3",
-		"@sveltejs/adapter-static": "^1.0.0-next.4",
+		"@sveltejs/adapter-static": "^1.0.0-next.9",
 		"@sveltejs/svelte-virtual-list": "^3.0.1",
 		"make-dir": "^3.1.0",
 		"readdirp": "^3.6.0",
-		"svelte-tiny-virtual-list": "^1.1.5"
+		"svelte-tiny-virtual-list": "^1.1.6"
 	}
 }
