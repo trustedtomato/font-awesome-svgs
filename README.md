@@ -4,7 +4,7 @@ The current (2021-04-01) Font Awesome website doesn't give you a way to download
 This project aims to resolve this issue.
 
 ## Live project
-You can access the website at [trustedtomato.github.io/font-awesome-svgs/](trustedtomato.github.io/font-awesome-svgs/).
+You can access the website at [trustedtomato.github.io/font-awesome-svgs/](https://trustedtomato.github.io/font-awesome-svgs/).
 
 ## Developing
 
