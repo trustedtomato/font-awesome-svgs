@@ -2,6 +2,8 @@
   import type { Icon } from './Icon'
 
   export let icon: Icon
+  let filename: string
+  $: filename = `${icon?.name}.svg`
   let aHref: string
   $: if(icon?.content) {
     aHref = 'data:text/plain;charset=utf-8,' + encodeURIComponent(icon?.content)
@@ -13,7 +15,7 @@
     {@html icon?.content }
   </div>
   <div>
-    <a download={icon?.name} href={aHref} style="margin: .5em; display: inline-block">
+    <a download={filename} href={aHref} style="margin: .5em; display: inline-block">
       Download!
     </a>
     <div style="margin: 0 .5em .5em .5em;">
