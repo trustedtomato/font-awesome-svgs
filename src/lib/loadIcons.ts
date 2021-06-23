@@ -1,8 +1,8 @@
-import { basePath } from '$lib/basePath'
+import { base } from '$app/paths'
 import type { Icon } from './Icon'
 
 export async function loadIcons (): Promise<Icon[]> {
-  const iconsRaw = await fetch(basePath + 'icons/collection.txt')
+  const iconsRaw = await fetch(base + '/icon/all.txt')
       .then(response => response.text())
   const icons = []
   for (const line of iconsRaw.split('\n')) {	

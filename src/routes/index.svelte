@@ -6,8 +6,8 @@
 	import { chunkArray } from '$lib/chunkArray'
 	import { browser } from '$app/env'
 	import Footer from '$lib/Footer.svelte'
-	import { basePath } from '$lib/basePath'
 	import Head from '$lib/Head.svelte'
+	import { base } from '$app/paths'
 
 	// --- setup state ---
 	let search = browser
@@ -63,19 +63,19 @@
 	})
 </script>
 
-<Head />
+<Head extraTitle={undefined} />
 
+<label class="search">
+	<span>
+		<img src={`${base}/icon/solid+search.svg`} alt="Search icon.">
+	</span>
+	<input bind:value={search} type="search">
+</label>
 {#if loading}
 	<div style="margin: auto">
 		Loading icons...
 	</div>
 {:else}
-	<label class="search">
-		<span>
-			{@html icons.find(icon => icon.name === 'solid/search').content}
-		</span>
-		<input bind:value={search} type="search">
-	</label>
 	<div class="grid-container" bind:this={gridContainer}>
 		<VirtualList
 			width="100%"
@@ -84,12 +84,12 @@
 			itemSize={itemHeight}
 		>
 			<div slot="item" let:index let:style {style} class="item-row">
-				{#each chunkedIconSelection[index] as icon}	
-					<a class="item" style="width: {itemWidth}px" href="{basePath}icon/?which={icon.name}">
+				{#each chunkedIconSelection[index] as icon}
+					<a class="item" style="width: {itemWidth}px" href="{base}/icon/{encodeURIComponent(icon.name)}">
 						{@html icon.content }
 						<div>
 							<div class="truncate">
-								{ icon.name }
+								{ icon.name.replace(/\+/, '/') }
 							</div>
 						</div>
 					</a>
